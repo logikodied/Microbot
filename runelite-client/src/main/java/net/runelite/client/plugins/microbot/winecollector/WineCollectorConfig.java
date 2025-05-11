@@ -7,7 +7,7 @@ import net.runelite.client.config.ConfigInformation;
 @ConfigGroup("winecollector")
 @ConfigInformation(
         "<h2>Wine Collector</h2>" +
-                "<h3>Version: 1.0.0</h3>" +
+                "<h3>Version: 1.1.0</h3>" +
                 "<p><strong>Start Location:</strong> Start the plugin inside <em>Guildmaster Apatura's quarters</em> — top floor of the Hunter's Guild, near the Eclipse Red wine.</p>" +
                 "<p><strong>Requirements:</strong> Must have completed <em>Children of the Sun</em>.</p>" +
                 "<p><strong>Profit:</strong> Around <em>240k gp/hr</em> automatically looting Eclipse Red wine.</p>" +

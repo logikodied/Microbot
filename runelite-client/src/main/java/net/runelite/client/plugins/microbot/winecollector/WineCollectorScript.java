@@ -18,10 +18,12 @@ import java.util.concurrent.TimeUnit;
 
 public class WineCollectorScript extends Script {
 
-    public static final String version = "1.1.1";
+    public static final String version = "1.1.0";
     private static final String WINE_NAME = "Eclipse red";
+    private static final int[] DANGEROUS_WORLDS = {
+            324, 325, 337, 392, 393, 417, 318, 319, 370, 471, 474, 475
+    };
 
-    private WorldPoint initialLocation;
     private WorldPoint wineArea;
 
     private enum State { COLLECTING, BANKING }
@@ -29,7 +31,7 @@ public class WineCollectorScript extends Script {
     public boolean run(WineCollectorConfig config) {
         if (!Microbot.isLoggedIn()) return false;
 
-        initialLocation = Rs2Player.getWorldLocation();
+        WorldPoint initialLocation = Rs2Player.getWorldLocation();
         wineArea = (initialLocation.getPlane() == 2)
                 ? initialLocation
                 : new WorldPoint(1556, 3034, 2);
@@ -55,12 +57,12 @@ public class WineCollectorScript extends Script {
                 }
 
                 Rs2Antiban.actionCooldown();
-                Rs2Random.waitEx(100, 600); // Now using waitEx instead of random
+                Rs2Random.waitEx(100, 600);
 
             } catch (Exception ex) {
                 Microbot.log("Error: " + ex.getMessage());
             }
-        }, 0, 100, TimeUnit.MILLISECONDS); // Fixed delay loop at minimum; actual delays are inside task
+        }, 0, 100, TimeUnit.MILLISECONDS);
         return true;
     }
 
@@ -132,8 +134,7 @@ public class WineCollectorScript extends Script {
     }
 
     private boolean isSafeWorld(int world) {
-        int[] blacklist = {324, 325, 337, 392, 393, 417, 318, 319, 370, 471, 474, 475};
-        for (int w : blacklist) {
+        for (int w : DANGEROUS_WORLDS) {
             if (w == world) return false;
         }
         return true;
@@ -141,6 +142,7 @@ public class WineCollectorScript extends Script {
 
     @Override
     public void shutdown() {
+        Rs2Antiban.resetAntibanSettings();
         super.shutdown();
     }
 }
